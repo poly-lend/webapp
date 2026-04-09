@@ -1,5 +1,5 @@
 import LenderOffersTable from '@/components/lender/lenderOffersTable'
-import { Spinner } from '@/components/ui/spinner'
+import { TableSkeleton } from '@/components/ui/tableSkeleton'
 import WalletGuard from '@/components/web3/walletGuard'
 import { AllLoanData } from '@/types/polyLend'
 import { fetchData } from '@/utils/fetchData'
@@ -19,22 +19,13 @@ export default function Lend() {
     fetchData({}).then(setData)
   }
 
+  const skeleton = <TableSkeleton columns={9} rows={4} />
+
   return (
     <div className="flex flex-col gap-2">
       <h1 className="font-bold text-center text-4xl mb-4">Sent Offers</h1>
 
-      <WalletGuard
-        isDataReady={!!data}
-        disconnectedChildren={
-          !!data ? (
-            <div className="flex justify-center py-6"></div>
-          ) : (
-            <div className="flex justify-center py-6">
-              <Spinner className="size-12 text-primary" />
-            </div>
-          )
-        }
-      >
+      <WalletGuard isDataReady={!!data} loadingSkeleton={skeleton} disconnectedChildren={!data ? skeleton : undefined}>
         <LenderOffersTable
           data={data as AllLoanData}
           userAddress={address as `0x${string}`}

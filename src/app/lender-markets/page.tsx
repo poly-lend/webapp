@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Spinner } from '@/components/ui/spinner'
+import { CardSkeletonGrid } from '@/components/ui/cardSkeleton'
 import { AllLoanData, LoanOffer } from '@/types/polyLend'
 import { toUSDString } from '@/utils/convertors'
 import { fetchData } from '@/utils/fetchData'
@@ -77,9 +77,7 @@ export default function Markets() {
           </Card>
         </div>
       ) : (
-        <div className="flex justify-center py-6">
-          <Spinner className="size-12 text-primary" />
-        </div>
+        <CardSkeletonGrid count={3} />
       )}
     </div>
   )
