@@ -1,4 +1,5 @@
 import BorrowerLoansTable from '@/components/borrower/borrowerLoansTable'
+import { TableSkeleton } from '@/components/ui/tableSkeleton'
 import WalletGuard from '@/components/web3/walletGuard'
 import { AllLoanData } from '@/types/polyLend'
 import { fetchData } from '@/utils/fetchData'
@@ -22,7 +23,7 @@ export default function BorrowerLoans() {
     <div className="flex flex-col gap-2">
       <h1 className="font-bold text-center text-4xl mb-4">Loans</h1>
 
-      <WalletGuard isDataReady={!!data}>
+      <WalletGuard isDataReady={!!data} loadingSkeleton={<TableSkeleton columns={11} rows={4} />}>
         <BorrowerLoansTable
           borrower={address as `0x${string}`}
           data={data as AllLoanData}
