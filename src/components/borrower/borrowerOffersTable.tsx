@@ -2,6 +2,7 @@ import { AllLoanData, LoanOffer } from '@/types/polyLend'
 import { Fragment, useState } from 'react'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { TableSkeleton } from '@/components/ui/tableSkeleton'
 
 import { polymarketSharesDecimals } from '@/config'
 import useProxyAddress from '@/hooks/useProxyAddress'
@@ -30,8 +31,8 @@ export default function BorrowerOffersTable({ data }: { data: AllLoanData }) {
 
   const { data: positions } = useQuery({
     queryKey: ['positions', proxyAddress],
+    enabled: !!proxyAddress,
     queryFn: async () => {
-      if (!proxyAddress) return []
       const r = await fetch(`https://api.polylend.com/positions?address=${proxyAddress}`)
       if (!r.ok) throw new Error('HTTP ' + r.status)
       const positions = (await r.json()) as Position[]
@@ -75,12 +76,16 @@ export default function BorrowerOffersTable({ data }: { data: AllLoanData }) {
 
   const [selectedPosition, selectPosition] = useState<Position | null>(null)
 
+  if (positions === undefined) {
+    return <TableSkeleton columns={6} rows={4} />
+  }
+
   return (
     <>
-      {positions && positions.length === 0 && unsupportedPositions === 0 && (
+      {positions.length === 0 && unsupportedPositions === 0 && (
         <div className="text-center">No positions found</div>
       )}
-      {positions && positions.length > 0 && (
+      {positions.length > 0 && (
         <Table>
           <TableHeader>
             <TableRow>
