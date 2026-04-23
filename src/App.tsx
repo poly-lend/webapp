@@ -1,10 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { WagmiProvider } from 'wagmi'
 import { QueryClientProvider } from '@tanstack/react-query'
+import { NETWORK } from '@/chainConfig'
 import { queryClient, wagmiConfig } from '@/utils/wagmi'
 import { Toaster } from '@/components/ui/sonner'
 import Nav from '@/components/nav'
 import Bottom from '@/components/bottom'
+import TestnetBanner from '@/components/testnetBanner'
 
 import Home from '@/app/page'
 import AllOffers from '@/app/all-offers/page'
@@ -19,6 +21,7 @@ export default function App() {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
+          {NETWORK === 'testnet' && <TestnetBanner />}
           <Nav />
           <div className="w-full max-w-7xl mx-auto px-4 flex-1 py-8">
             <Routes>
