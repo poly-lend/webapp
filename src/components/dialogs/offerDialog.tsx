@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { track } from '@/utils/analytics'
 import {
   Dialog,
   DialogClose,
@@ -74,6 +75,7 @@ export default function OfferDialog({
 
   useEffect(() => {
     if (isOfferConfirmed && offerTxHash) {
+      track('offer_created', { tx_hash: offerTxHash, loan_amount: loanAmount, rate, duration, perpetual })
       setOpen(false)
       toast.success('Offer submitted successfully')
       onSuccess()

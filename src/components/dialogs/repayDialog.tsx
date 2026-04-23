@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { track } from '@/utils/analytics'
 import {
   Dialog,
   DialogClose,
@@ -85,6 +86,7 @@ export default function RepayDialog({ loanId, startTime, onDataRefresh }: RepayD
 
   useEffect(() => {
     if (isRepayConfirmed) {
+      track('loan_repaid', { tx_hash: repayTxHash, loan_id: loanId })
       setOpen(false)
       toast.success('Repayment submitted successfully')
       onDataRefresh()

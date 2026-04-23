@@ -1,6 +1,7 @@
 import LoadingActionButton from '@/components/widgets/loadingActionButton'
 import { usdcAddress } from '@/config'
 import { usdcConfig } from '@/contracts/usdc'
+import { track } from '@/utils/analytics'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 import { BaseError, parseUnits } from 'viem'
@@ -15,10 +16,11 @@ export default function GetTestUsdcButton() {
 
   useEffect(() => {
     if (isSuccess) {
+      track('testnet_usdc_minted', { tx_hash: txHash, amount: '1000' })
       toast.success('Minted 1,000 pfUSDC')
       reset()
     }
-  }, [isSuccess, reset])
+  }, [isSuccess, reset, txHash])
 
   if (!address || chain?.id !== 31337) return null
 

@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { track } from '@/utils/analytics'
 import {
   Dialog,
   DialogClose,
@@ -96,6 +97,11 @@ export default function AcceptDialog({
 
   useEffect(() => {
     if (isAcceptConfirmed && acceptTxHash) {
+      track('loan_accepted', {
+        tx_hash: acceptTxHash,
+        offer_id: offer.offerId,
+        loan_amount: loanAmount.toString(),
+      })
       setOpen(false)
       toast.success('Offer accepted successfully')
       onSuccess()

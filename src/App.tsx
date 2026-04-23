@@ -4,6 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { NETWORK } from '@/chainConfig'
 import { queryClient, wagmiConfig } from '@/utils/wagmi'
 import { Toaster } from '@/components/ui/sonner'
+import AnalyticsProvider from '@/components/analyticsProvider'
 import Nav from '@/components/nav'
 import Bottom from '@/components/bottom'
 import TestnetBanner from '@/components/testnetBanner'
@@ -21,21 +22,23 @@ export default function App() {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          {NETWORK === 'testnet' && <TestnetBanner />}
-          <Nav />
-          <div className="w-full max-w-7xl mx-auto px-4 flex-1 py-8">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/all-offers" element={<AllOffers />} />
-              <Route path="/borrower-loans" element={<BorrowerLoans />} />
-              <Route path="/lender-loans" element={<LenderLoans />} />
-              <Route path="/lender-markets" element={<LenderMarkets />} />
-              <Route path="/lender-event/:id" element={<LenderEvent />} />
-              <Route path="/lender-offers" element={<LenderOffers />} />
-            </Routes>
-          </div>
-          <Bottom />
-          <Toaster position="bottom-center" richColors />
+          <AnalyticsProvider>
+            {NETWORK === 'testnet' && <TestnetBanner />}
+            <Nav />
+            <div className="w-full max-w-7xl mx-auto px-4 flex-1 py-8">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/all-offers" element={<AllOffers />} />
+                <Route path="/borrower-loans" element={<BorrowerLoans />} />
+                <Route path="/lender-loans" element={<LenderLoans />} />
+                <Route path="/lender-markets" element={<LenderMarkets />} />
+                <Route path="/lender-event/:id" element={<LenderEvent />} />
+                <Route path="/lender-offers" element={<LenderOffers />} />
+              </Routes>
+            </div>
+            <Bottom />
+            <Toaster position="bottom-center" richColors />
+          </AnalyticsProvider>
         </BrowserRouter>
       </QueryClientProvider>
     </WagmiProvider>
