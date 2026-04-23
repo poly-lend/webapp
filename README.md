@@ -36,12 +36,23 @@ npm run format    # Format with Prettier
 
 ## Configuration
 
-Contract addresses and constants are in `src/config.ts`:
+### Network selection
 
-- `polylendAddress` - PolyLend contract (Polygon)
-- `usdcAddress` - USDC token
-- `polymarketTokensAddress` - Polymarket ERC1155 conditional tokens
-- `MINIMUM_LOAN_DURATION_SECONDS` - 1 day minimum loan duration
+The webapp builds for either `mainnet` (Polygon) or `testnet` (Anvil fork on chain id 31337), chosen at build time via `VITE_NETWORK`:
+
+```bash
+npm run build                    # mainnet (default)
+VITE_NETWORK=testnet npm run build
+```
+
+Per-network chain + contract addresses live in `src/chainConfig.ts`. `src/config.ts` re-exports the current network's addresses so existing imports keep working. Unknown `VITE_NETWORK` values throw at module load.
+
+### Addresses
+
+- `polylendAddress` — PolyLend contract
+- `usdcAddress` — USDC token (mainnet: Polygon USDC; testnet: pfUSDC)
+- `polymarketTokensAddress` — Polymarket ERC1155 conditional tokens
+- `MINIMUM_LOAN_DURATION_SECONDS` — 1 day minimum loan duration
 
 ## Deployment
 
