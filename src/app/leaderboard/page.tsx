@@ -1,3 +1,4 @@
+import ReferralShare from '@/components/referralShare'
 import { TableSkeleton } from '@/components/ui/tableSkeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { truncateAddress } from '@/utils/convertors'
@@ -17,8 +18,10 @@ export default function Leaderboard() {
   const connected = address?.toLowerCase()
 
   return (
-    <div className="flex flex-col gap-2">
-      <h1 className="font-bold text-center text-4xl mb-4">Testnet Leaderboard</h1>
+    <div className="flex flex-col gap-4">
+      <h1 className="font-bold text-center text-4xl mb-2">Testnet Leaderboard</h1>
+
+      <ReferralShare />
 
       {isLoading ? (
         <TableSkeleton columns={4} rows={10} />
