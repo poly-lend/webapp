@@ -1,5 +1,6 @@
 import { NETWORK } from '@/chainConfig'
 import { identify, registerSuperProperties, resetIdentity, track } from '@/utils/analytics'
+import { identifyFeaturebaseUser } from '@/utils/featurebase'
 import { ReactNode, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useConnection } from 'wagmi'
@@ -27,6 +28,7 @@ export default function AnalyticsProvider({ children }: { children: ReactNode })
     const prev = prevAddressRef.current
     if (address && address !== prev) {
       identify(address, { chain_id: chain?.id, chain_name: chain?.name })
+      identifyFeaturebaseUser(address)
       track('wallet_connected', { chain_id: chain?.id, chain_name: chain?.name })
     } else if (!address && prev) {
       track('wallet_disconnected')
