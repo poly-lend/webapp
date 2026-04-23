@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/sonner'
 import AnalyticsProvider from '@/components/analyticsProvider'
 import Nav from '@/components/nav'
 import Bottom from '@/components/bottom'
+import ReferralProvider from '@/components/referralProvider'
 import TestnetBanner from '@/components/testnetBanner'
 
 import Home from '@/app/page'
@@ -23,6 +24,7 @@ export default function App() {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
+          <ReferralProvider>
           <AnalyticsProvider>
             {NETWORK === 'testnet' && <TestnetBanner />}
             <Nav />
@@ -41,6 +43,7 @@ export default function App() {
             <Bottom />
             <Toaster position="bottom-center" richColors />
           </AnalyticsProvider>
+          </ReferralProvider>
         </BrowserRouter>
       </QueryClientProvider>
     </WagmiProvider>
