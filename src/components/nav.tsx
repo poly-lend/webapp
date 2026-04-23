@@ -66,6 +66,22 @@ export default function Nav() {
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
+                  {NETWORK === 'testnet' && (
+                    <NavigationMenuItem>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          to="/leaderboard"
+                          className={cn(
+                            navigationMenuTriggerStyle(),
+                            pathname === '/leaderboard' && 'text-primary',
+                          )}
+                        >
+                          <div className="flex items-center gap-1.5 text-base font-bold">Leaderboard</div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  )}
+
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild>
                       <a href="https://docs.polylend.com" target="_blank" rel="noopener noreferrer">
@@ -146,6 +162,19 @@ export default function Nav() {
             >
               <span className="flex items-center gap-1.5">Loans</span>
             </Link>
+
+            {NETWORK === 'testnet' && (
+              <Link
+                to="/leaderboard"
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  'flex items-center justify-between py-2 text-base font-semibold',
+                  pathname === '/leaderboard' && 'text-primary',
+                )}
+              >
+                <span className="flex items-center gap-1.5">Leaderboard</span>
+              </Link>
+            )}
 
             <a
               href="https://docs.polylend.com"

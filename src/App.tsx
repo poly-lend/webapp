@@ -12,6 +12,7 @@ import TestnetBanner from '@/components/testnetBanner'
 import Home from '@/app/page'
 import AllOffers from '@/app/all-offers/page'
 import BorrowerLoans from '@/app/borrower-loans/page'
+import Leaderboard from '@/app/leaderboard/page'
 import LenderLoans from '@/app/lender-loans/page'
 import LenderMarkets from '@/app/lender-markets/page'
 import LenderEvent from '@/app/lender-event/page'
@@ -34,6 +35,7 @@ export default function App() {
                 <Route path="/lender-markets" element={<LenderMarkets />} />
                 <Route path="/lender-event/:id" element={<LenderEvent />} />
                 <Route path="/lender-offers" element={<LenderOffers />} />
+                {NETWORK === 'testnet' && <Route path="/leaderboard" element={<Leaderboard />} />}
               </Routes>
             </div>
             <Bottom />
