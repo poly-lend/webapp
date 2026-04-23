@@ -6,12 +6,14 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
+import { NETWORK } from '@/chainConfig'
 import { cn } from '@/lib/utils'
 import { ExternalLink, Menu, X } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import ClientOnly from '../utils/clientOnly'
 import ConnectWallet from './web3/connectWallet'
+import GetTestUsdcButton from './web3/getTestUsdcButton'
 import SwitchChain from './web3/switchChain'
 import Balance from './widgets/balance'
 
@@ -90,6 +92,11 @@ export default function Nav() {
                   <Balance />
                 </div>
               </ClientOnly>
+              {NETWORK === 'testnet' && (
+                <ClientOnly>
+                  <GetTestUsdcButton />
+                </ClientOnly>
+              )}
               <ClientOnly>
                 <ConnectWallet />
               </ClientOnly>
@@ -160,6 +167,11 @@ export default function Nav() {
               <ClientOnly>
                 <Balance />
               </ClientOnly>
+              {NETWORK === 'testnet' && (
+                <ClientOnly>
+                  <GetTestUsdcButton />
+                </ClientOnly>
+              )}
               <ClientOnly>
                 <ConnectWallet />
               </ClientOnly>
