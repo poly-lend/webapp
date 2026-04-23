@@ -6,6 +6,7 @@ RUN npm ci
 COPY . .
 ARG VITE_PUBLIC_POSTHOG_PROJECT_TOKEN
 ARG VITE_PUBLIC_POSTHOG_HOST
+ARG VITE_NETWORK
 RUN npm run build
 
 # Output: static files in /dist
