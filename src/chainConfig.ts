@@ -30,6 +30,20 @@ const polylendTestnet: Chain = {
   testnet: true,
 }
 
+// Testnet PolyLend is the only address that changes per deploy; everything
+// else on the testnet (pfUSDC, ConditionalTokens, SafeProxyFactory) carries
+// over from the Polygon fork and is therefore stable.
+// The infra-side deploy pipeline passes the freshly-deployed address via a
+// --build-arg → ARG → process.env chain; we fall back to the last known
+// address if the arg is unset so a plain `docker build` without the pipeline
+// still produces a working testnet bundle.
+const TESTNET_POLYLEND_FALLBACK = '0xb3EF97d369a6a1Ca69f525916557d58653A07bE8'
+const testnetPolylendEnv = import.meta.env.VITE_TESTNET_POLYLEND_ADDRESS
+const testnetPolylendAddress: `0x${string}` =
+  testnetPolylendEnv && testnetPolylendEnv.startsWith('0x')
+    ? (testnetPolylendEnv as `0x${string}`)
+    : TESTNET_POLYLEND_FALLBACK
+
 // Inline ternary (not a Record lookup) so the unused branch is dead-code
 // eliminated and the bundle only carries the selected network's addresses.
 export const chainConfig: ChainConfig =
@@ -48,7 +62,7 @@ export const chainConfig: ChainConfig =
         chain: polylendTestnet,
         usdcAddress: '0xf6b4Ae31f5C74191E920291c68e9769c4a46D3E4',
         usdcDecimals: 6,
-        polylendAddress: '0xb3EF97d369a6a1Ca69f525916557d58653A07bE8',
+        polylendAddress: testnetPolylendAddress,
         polylendDecimals: 18,
         polymarketSharesDecimals: 6,
         proxyAddress: '0xaacFeEa03eb1561C4e67d661e40682Bd20E3541b',
