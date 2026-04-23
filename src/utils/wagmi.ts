@@ -1,9 +1,9 @@
-import { QueryClient } from "@tanstack/react-query";
-import { createConfig, http } from "wagmi";
-import { polygon } from "wagmi/chains";
-import { injected } from "wagmi/connectors";
+import { QueryClient } from '@tanstack/react-query'
+import { createConfig, http } from 'wagmi'
+import { injected } from 'wagmi/connectors'
+import { chainConfig } from '@/chainConfig'
 
-export const chain = polygon;
+export const chain = chainConfig.chain
 
 export const wagmiConfig = createConfig({
   chains: [chain],
@@ -11,7 +11,6 @@ export const wagmiConfig = createConfig({
   transports: {
     [chain.id]: http(),
   },
-  //ssr: true, // If your dApp uses server side rendering (SSR)
-});
+})
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient()
